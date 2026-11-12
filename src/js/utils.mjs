@@ -32,7 +32,7 @@ export function getParam(param) {
 
 //new template function
 export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false){
-  const htmlStrings = list.map(productCardTemplate);
+  const htmlStrings = list.map(template);
   if (clear) {
     parentElement.innerHTML = "";
   }
