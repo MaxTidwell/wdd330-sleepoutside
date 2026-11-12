@@ -26,3 +26,16 @@ function cartItemTemplate(item) {
 }
 
 renderCartContents();
+
+// Total $ in cart
+function updateTotal() {
+  const cartItems = getLocalStorage("so-cart") || [];
+
+  const total = cartItems.reduce((sum, item) => {
+    return sum + item.FinalPrice;
+  }, 0);
+
+  document.querySelector(".cart-total").textContent = `Total Price: $${total.toFixed(2)}`;
+}
+
+updateTotal();
