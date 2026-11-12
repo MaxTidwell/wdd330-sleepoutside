@@ -31,6 +31,10 @@ renderCartContents();
 function updateTotal() {
   const cartItems = getLocalStorage("so-cart") || [];
 
+  if (cartItems.length > 0) {
+    document.querySelector(".cart-footer").classList.remove("hide");
+  }
+
   const total = cartItems.reduce((sum, item) => {
     return sum + item.FinalPrice;
   }, 0);
