@@ -35,11 +35,10 @@ function updateTotal() {
     document.querySelector(".cart-footer").classList.remove("hide");
   }
 
-  const total = cartItems.reduce((sum, item) => {
-    return sum + item.FinalPrice;
-  }, 0);
+  const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
 
-  document.querySelector(".cart-total").textContent = `Total Price: $${total.toFixed(2)}`;
+  document.querySelector(".cart-total").textContent =
+    `Total Price: $${total.toFixed(2)}`;
 }
 
 updateTotal();
