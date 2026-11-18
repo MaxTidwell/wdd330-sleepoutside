@@ -20,7 +20,7 @@ function cartItemTemplate(item) {
     <h2 class="card__name">${item.Name}</h2>
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-  <p class="cart-card__quantity">qty: 1</p>
+  <p class="cart-card__quantity">${item.quantity}</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
 </li>
 `;
@@ -41,7 +41,7 @@ function updateTotal() {
   const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
 
   document.querySelector(".cart-total").textContent =
-    `Total Price: $${total.toFixed(2)}`;
+    `$${total.toFixed(2)}`;
 }
 
 updateTotal();
