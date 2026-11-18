@@ -18,7 +18,14 @@ export default class ProductDetails {
 
   addProductToCart() {
     const cartItems = getLocalStorage("so-cart") || [];
-    cartItems.push(this.product);
+    
+    // Duplicate Items in cart
+    const existingItem = cartItems.find(item => item.Id === this.product.Id);
+    if (existingItem) {
+      existingItem.quantity = (existingItem.quantity || 1) +1;
+    } else {
+      cartItems.push(this.product);
+    }
     setLocalStorage("so-cart", cartItems);
   }
 
