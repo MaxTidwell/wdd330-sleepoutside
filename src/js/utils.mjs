@@ -36,7 +36,7 @@ export function renderListWithTemplate(template, parentElement, list, position =
   if (clear) {
     parentElement.innerHTML = "";
   }
-  parentElement.insertAdjacentHTML("afterbegin", htmlStrings.join(""));
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
 // header and footer templates
