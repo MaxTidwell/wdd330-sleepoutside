@@ -12,7 +12,7 @@ export default class ProductDetails {
     this.product = await this.dataSource.findProductById(this.productId);
     this.renderProductDetails();
     document
-      .getElementById("addToCart")
+      .getElementById("add-to-Cart")
       .addEventListener("click", this.addProductToCart.bind(this));
   }
 
@@ -28,7 +28,7 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-    document.querySelector("h2").textContent = product.Category/charAt(0).toUpperCase() + product.Category.slice(1);
+    document.querySelector("h2").textContent = product.Category.charAt(0).toUpperCase() + product.Category.slice(1);
     document.querySelector("#productBrand").textContent = product.Brand.Name;
     document.querySelector("#productName").textContent = product.NameWithoutBrand;
 
@@ -40,7 +40,7 @@ function productDetailsTemplate(product) {
     document.querySelector("#productColor").textContent = product.Colors[0].ColorName;
     document.querySelector("#productDesc").innerHTML = product.DescriptionHtmlSimple;
 
-    document.querySelector("#addToCart").dataset.id = product.id;
+    document.querySelector("#add-to-Cart").dataset.Id = product.Id;
 }
 
 
