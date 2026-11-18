@@ -1,13 +1,13 @@
 import ProductData from "./ProductData.mjs";
 import { getParam, loadHeaderFooter } from "./utils.mjs";
-import productDetails from "./ProductDetails.mjs";
+import ProductDetails from "./ProductDetails.mjs";
 
 loadHeaderFooter();
 
 const dataSource = new ProductData("tents");
 const productID = getParam("product");
 
-const product = new productDetails(productID, dataSource);
+const product = new ProductDetails(productID, dataSource);
 product.init();
 
 // add to cart button event handler
