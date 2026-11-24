@@ -38,10 +38,9 @@ function updateTotal() {
     document.querySelector(".cart-footer").classList.remove("hide");
   }
 
-  const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+  const total = cartItems.reduce((sum, item) => sum + (item.FinalPrice * item.quantity || 1), 0);
 
-  document.querySelector(".cart-total").textContent =
-    `$${total.toFixed(2)}`;
+  document.querySelector(".cart-total").textContent = `$${total.toFixed(2)}`;
 }
 
 updateTotal();

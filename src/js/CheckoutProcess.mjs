@@ -19,7 +19,7 @@ function packageItems(items) {
             id: item.Id,
             price: item.FinalPrice,
             name: item.Name,
-            quantity: 1, // hasnt been fixed to account for multiple quantities in cart
+            quantity: item.quantity || 1,
         };
     });
     return simplifiedItems;
@@ -48,17 +48,19 @@ export class CheckoutProcess {
         const itemNumElement = document.querySelector(
             this.outputSelector + " #num-items"
         );
-        itemNumElement.innerText = this.list.length;
+        // changing to account for multiple quantities
+        const totalItems = this.list.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        itemNumElement.innerText = totalItems;
 
-        const amounts = this.list.map((item) => item.finalPrice);
-        this.itemTotal = amounts.reduce((sum, item) => sum + item);
+        //const amounts = this.list.map((item) => item.FinalPrice);
+        this.itemTotal = this.list.reduce((sum, item) => sum + (item.FinalPrice * (item.quantity || 1)), 0);
         summaryElement.innerText = `$${this.itemTotal}`;
     }
 
     calculateOrderTotal() {
         this.tax = (this.itemTotal * .06);
         this.shipping = 10 + (this.list.length - 1) * 2;
-        this.orderTotal = (parseFloat(this.itemTotal) + parseFloat(this.tax) + parseFloat(this.shipping)); // semicolon not in solution code
+        this.orderTotal = (parseFloat(this.itemTotal) + parseFloat(this.tax) + parseFloat(this.shipping));
 
         this.displayOrderTotals();
     }
@@ -73,7 +75,7 @@ export class CheckoutProcess {
         orderTotal.innerText = `$${this.orderTotal.toFixed(2)}`;
     }
 
-    async checkout(form) {
+    async checkout() {
         const formElement = document.forms["checkout"];
         const order = formDataToJSON(formElement);
 
@@ -82,6 +84,7 @@ export class CheckoutProcess {
         order.tax = this.tax;
         order.shipping = this.shipping;
         order.items = packageItems(this.list);
+        console.log(order);
 
         try{
             const response = await services.checkout(order);
