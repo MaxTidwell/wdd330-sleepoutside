@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sleep Outside | Checkout</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/checkout.js" type="module"></script>
   </head>
 
   <body>
@@ -16,7 +17,7 @@
       <section class="checkout-form">
         <form name="checkout">
           <fieldset>
-            <legend></legend>
+            <legend>Name and Address</legend>
             <div class="checkout__name">
               <label for="fname">First Name</label>
               <input type="text" name="fname" id="fname" required />
@@ -50,15 +51,15 @@
 
             <div class="order__summary">
               <div>Items</div>
-              <div id="numberItems"></div>
+              <div id="num-items"></div>
               <div>Subtotal</div>
               <div id="cartTotal"></div>
-              <div>Shipping</div>
               <div>Tax</div>
               <div id="tax"></div>
+              <div>Shipping</div>
               <div id="shipping"></div>
               <div>Total</div>
-              <div id="total"></div>
+              <div id="orderTotal"></div>
             </div>
           </fieldset>
           <button type="submit" id="checkoutSubmit">Checkout</button>
