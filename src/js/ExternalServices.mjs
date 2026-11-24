@@ -1,11 +1,14 @@
 const baseURL = import.meta.env.VITE_SERVER_URL
 
-function convertToJson(res) {
+export async function convertToJson(res) {
+  const jsonResponse = await res.json()
   if (res.ok) {
-    return res.json();
-  } else {
-    throw new Error("Bad Response");
-  }
+    return jsonResponse;
+  } 
+  throw { 
+    name: 'servicesError',
+    message: jsonResponse, 
+  };
 }
 
 export default class ExternalServices {
@@ -28,13 +31,12 @@ export default class ExternalServices {
   }
 
   async checkout(payload) {
-    const options = {
+    return fetch(`${baseURL}checkout/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
-    };
-    return await fetch(`${baseURL}checkout/`, options).then(convertToJson);
+    }).then(convertToJson);
   }
 }

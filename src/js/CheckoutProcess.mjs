@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage, removeAllAlerts } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -37,7 +37,8 @@ export class CheckoutProcess {
     }
 
     init() {
-        this.list = getLocalStorage(this.key);
+        const storedItems = getLocalStorage(this.key);
+        this.list = Array.isArray(storedItems) ? storedItems : [storedItems];
         this.calculateItemSummary();
     }
 
@@ -76,7 +77,7 @@ export class CheckoutProcess {
     }
 
     async checkout() {
-        const formElement = document.forms["checkout"];
+        const formElement = document.forms.checkout;
         const order = formDataToJSON(formElement);
 
         order.orderDate = new Date().toISOString();
@@ -84,13 +85,17 @@ export class CheckoutProcess {
         order.tax = this.tax;
         order.shipping = this.shipping;
         order.items = packageItems(this.list);
-        console.log(order);
-
+        
         try{
-            const response = await services.checkout(order);
-            console.log(response);
-        } catch (err) {
-            console.log(err);
+            await services.checkout(order);
+            setLocalStorage(this.key, []);
+            window.location.assign("checkout/success.html");
+        } catch (error) {
+            removeAllAlerts();
+            const messages = error.message && typeof error.message === "object"
+                ? Object.values(error.message)
+                :[error.message || "Unable to place order."];
+            messages.forEach((message) => alertMessage(message));
         }
     }
 }
