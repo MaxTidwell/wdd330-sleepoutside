@@ -27,6 +27,7 @@ export default class ProductDetails {
       cartItems.push(this.product);
     }
     setLocalStorage("so-cart", cartItems);
+    animateCart();
   }
 
   renderProductDetails() {
@@ -50,6 +51,12 @@ function productDetailsTemplate(product) {
     document.querySelector("#add-to-Cart").dataset.Id = product.Id;
 }
 
-
+function animateCart() {
+  const cartIcon = document.querySelector(".cart");
+  
+  cartIcon.classList.remove("bounce");
+  void cartIcon.offsetWidth;
+  cartIcon.classList.add("bounce");
+}
 
 
